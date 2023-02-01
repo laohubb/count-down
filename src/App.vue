@@ -12,7 +12,7 @@ onMounted(() => {
     let now = dayjs()
     hour.value = night.diff(now, 'hour')
     minute.value = night.diff(now, 'minute') % 60
-    document.title=`还剩${hour.value}小时${minute.value}分钟`
+    document.title=`${hour.value}h${minute.value}m`
   }
   computeDiff()
   setInterval(computeDiff, 10000)
