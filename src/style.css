@@ -58,3 +58,9 @@ a:focus {
   color: #c00;
   text-decoration: underline;
 }
+input {
+  border: none;
+  outline: none;
+  background: transparent;
+  /* 其他样式 */
+}

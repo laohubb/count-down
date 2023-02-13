@@ -19,7 +19,7 @@ onMounted(() => {
   setInterval(computeDiff, 10000)
 
 })
-const closeModal = () => {
+const confirmTime = () => {
   localStorage.setItem('customHour', formatNumber(customHour.value))
   localStorage.setItem('customMinute', formatNumber(customMinute.value))
   computeDiff()
@@ -58,10 +58,10 @@ const computeDiff = () => {
 
 <template>
 
-  <div class="box" @click="visible = true">
+  <div class="box">
 
     <div class="time">
-      <div class="title">距离指定时间还有</div>
+      <div class="title">距离<span class="click" @click="visible = true">指定时间</span>还有</div>
       <span class="hour">{{ hour }}</span>
       小时
       <span class="minute">{{ minute }}</span>
@@ -70,20 +70,22 @@ const computeDiff = () => {
   </div>
   <div class="hello">
 
-    <modal v-if="visible" @close="closeModal">
+    <modal v-model:visible="visible" @close="confirmTime">
       <template v-slot:header>
         <h3>自定义时间</h3>
       </template>
       <template v-slot:body>
-        <input type="number" v-model="customHour">:
-        <input type="number" v-model="customMinute">
+        <div class="input-time">
+          <input type="number" v-model="customHour">
+          <span>:</span>
+          <input type="number" v-model="customMinute">
+        </div>
       </template>
     </modal>
   </div>
 </template>
 
 <style scoped>
-
 .box {
   height: 99vh;
   display: flex;
@@ -111,4 +113,34 @@ const computeDiff = () => {
 .minute {
   color: #e3637c;
 }
+
+.click {
+  color: #e3637c;
+  cursor: pointer;
+}
+
+.input-time {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.input-time input {
+  width: 50px;
+  height: 50px;
+  font-size: 30px;
+  text-align: center;
+}
+
+.input-time input[type="number"]  {
+  width: 40%;
+
+}
+
+.input-time span {
+  font-size: 30px;
+  margin: 0 10px;
+}
+
+
 </style>

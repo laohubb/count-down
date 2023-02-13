@@ -1,25 +1,17 @@
 <template>
     <transition name="modal">
-        <div class="modal-mask">
-            <div class="modal-wrapper">
-                <div class="modal-container">
+        <div  v-if="visible" class="modal-mask" @click="cancel">
+            <div class="modal-wrapper" >
+                <div class="modal-container" @click.stop>
                     <div class="modal-header">
-                        <slot name="header">
-                            default header
-                        </slot>
+                        <slot name="header">default header</slot>
                     </div>
-
                     <div class="modal-body">
-                        <slot name="body">
-                            default body
-                        </slot>
+                        <slot name="body">default body</slot>
                     </div>
-
                     <div class="modal-footer">
                         <slot name="footer">
-                            <button class="modal-default-button" @click="$emit('close')">
-                                OK
-                            </button>
+                            <button class="modal-default-button" @click="$emit('close')">OK</button>
                         </slot>
                     </div>
                 </div>
@@ -28,18 +20,27 @@
     </transition>
 </template>
 
-<script lang="js">
-export default {
-    data() {
-        return {
-            show: false
-        }
+<script setup>
+import { defineProps } from 'vue';
+import { defineEmits } from 'vue'
+
+const props = defineProps({
+    visible: {
+        type: Boolean
     }
+})
+const emits = defineEmits(['update:visible','close'])
+
+function cancel() {
+    emits('update:visible', false)
 }
+
 </script>
 
 
 <style scoped>
+
+
 .modal-mask {
     position: fixed;
     z-index: 9998;
@@ -69,11 +70,11 @@ export default {
 }
 
 .modal-header {
-    padding: 20px 0;
+    padding: 10px 0;
 }
 
 .modal-body {
-    padding: 20px 0;
+    padding: 10px 0;
 }
 
 .modal-footer {
